@@ -20,7 +20,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
 
     }
 
-    public static class SeriesFavViewHolder extends RecyclerView.ViewHolder{
+    public  class SeriesFavViewHolder extends RecyclerView.ViewHolder{
 
         CardView cardView;
         ImageView imageView;
@@ -71,6 +71,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
             @Override
             public void onClick(View v) {
                 series.get(pos).setFavorited(false);
+                ((ImageButton) v).setImageResource(R.drawable.star_default);
                 series.remove(series.get(pos));
                 notifyDataSetChanged();
             }

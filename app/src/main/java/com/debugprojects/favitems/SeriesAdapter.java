@@ -1,10 +1,9 @@
 package com.debugprojects.favitems;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
+public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
 
     private ArrayList<Serie> series;
     private ArrayList<Serie> seriesFav;
@@ -78,13 +75,26 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
             @Override
             public void onClick(View v) {
                 if(series.get(position).isFavorited()){
-                    series.get(position).setFavorited(false);
-                    seriesFav.remove(series.get(position));
+                    Serie serie = series.get(position);
+
+                    serie.setFavorited(false);
+                    ((ImageButton) v).setImageResource(R.drawable.star_default);
+
+                    if(seriesFav.contains(serie)){
+                        Log.d("Adpater", "Si esta");
+                        int index = seriesFav.indexOf(serie);
+                        seriesFav.remove(index);
+                        remover(index);
+                    }
+
                 }else{
                     series.get(position).setFavorited(true);
                     seriesFav.add(series.get(position));
+                    ((ImageButton)v).setImageResource(R.drawable.star_pressed);
+                    agregar(seriesFav.indexOf(series.get(position)));
                 }
-                notifyDataSetChanged();
+               // notifyDataSetChanged();
+
             }
         });
 
@@ -94,6 +104,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     public int getItemCount() {
         return series.size();
     }
+
+    public abstract void remover(int series);
+    public abstract void agregar(int series);
 
     public void load(ArrayList<Serie> series,ArrayList<Serie> seriesFav){
         this.series = series;

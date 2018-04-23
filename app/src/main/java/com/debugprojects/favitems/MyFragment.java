@@ -1,5 +1,6 @@
 package com.debugprojects.favitems;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,7 +28,7 @@ public class MyFragment extends Fragment {
     private Bundle bundle;
     ArrayList<Serie> series;
     ArrayList<Serie> seriesFav;
-
+    OnCreateAdapter adapter;
 
     public MyFragment() {}
 
@@ -44,8 +45,6 @@ public class MyFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
     }
 
@@ -65,25 +64,29 @@ public class MyFragment extends Fragment {
         series = (ArrayList<Serie>) bundle.getSerializable(SERIES_ARRAY_LIST);
         seriesFav = (ArrayList<Serie>) bundle.getSerializable(SERIES_ARRAY_LIST_FAV);
 
-        boolean favorited = bundle.getBoolean(FAV_KEY);
-
-        adapter_default = new SeriesAdapter(series,seriesFav);
-        adapter_fav = new SeriesAdapterFav(seriesFav);
-
-        if(favorited){
-            rv.setAdapter(adapter_fav);
-        }else{
-            rv.setAdapter(adapter_default);
-        }
+        adapter.onCreateAdapter(rv, bundle.getBoolean(FAV_KEY));
 
         return view;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof OnCreateAdapter){
+            adapter = (OnCreateAdapter) context;
+        }else{
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        adapter_default.load(series,seriesFav);
-        adapter_fav.load(seriesFav);
+    public void onDetach() {
+        super.onDetach();
+        adapter = null;
+    }
+
+    public interface OnCreateAdapter{
+         void onCreateAdapter(RecyclerView rv, boolean fav);
     }
 }

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 import static com.debugprojects.favitems.MyFragment.SERIES_ARRAY_LIST;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyFragment.OnCreateAdapter {
 
     public static final String SERIES_ARRAY_LIST_FAV = "series_array_list_fav" ;
     TabLayout mtabLayout;
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     public Bundle args;
     ArrayList<Serie> series = new ArrayList<>();
     ArrayList<Serie> seriesFav = new ArrayList<>();
+    SeriesAdapter seriesAdapter;
+    SeriesAdapterFav seriesAdapterFav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,29 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(adapter);
         mtabLayout.setTabsFromPagerAdapter(adapter);
         mtabLayout.setupWithViewPager(mPager);
+
+        seriesAdapterFav = new SeriesAdapterFav(seriesFav);
+        seriesAdapter = new SeriesAdapter(series,seriesFav) {
+            @Override
+            public void remover(int series) {
+                seriesAdapterFav.notifyItemRemoved(series);
+            }
+
+            @Override
+            public void agregar(int series) {
+                seriesAdapterFav.notifyItemInserted(series);
+
+            }
+        };
+    }
+
+    @Override
+    public void onCreateAdapter(RecyclerView rv, boolean fav) {
+        if(fav){
+            rv.setAdapter(seriesAdapterFav);
+        }else{
+            rv.setAdapter(seriesAdapter);
+        }
     }
 
     class MyPagerAdapter extends FragmentStatePagerAdapter{
