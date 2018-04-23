@@ -9,25 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.Fragment;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.zip.Inflater;
-
 import java.util.ArrayList;
 
-public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.SeriesViewHolder>{
+public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.SeriesFavViewHolder>{
 
     private ArrayList<Serie> series;
 
@@ -36,7 +20,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
 
     }
 
-    public static class SeriesViewHolder extends RecyclerView.ViewHolder{
+    public static class SeriesFavViewHolder extends RecyclerView.ViewHolder{
 
         CardView cardView;
         ImageView imageView;
@@ -44,7 +28,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
         TextView text_rating;
         ImageButton button_star;
 
-        public SeriesViewHolder(View itemView) {
+        public SeriesFavViewHolder(View itemView) {
             super(itemView);
 
             imageView =  itemView.findViewById(R.id.card_image);
@@ -59,13 +43,13 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
 
     @NonNull
     @Override
-    public SeriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SeriesFavViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        return (new SeriesViewHolder(view));
+        return (new SeriesFavViewHolder(view));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SeriesViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull SeriesFavViewHolder holder, final int position) {
         boolean isFavorited=series.get(position).isFavorited();
 
         if(isFavorited){

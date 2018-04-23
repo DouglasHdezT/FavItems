@@ -1,5 +1,6 @@
 package com.debugprojects.favitems;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mPager;
     MyPagerAdapter adapter;
     public Bundle args;
+    ArrayList<Serie> series = new ArrayList<>();
+    ArrayList<Serie> seriesFav = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        args = getFirstSeries();
+        getFirstSeries();
 
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         mtabLayout = findViewById(R.id.tab_layout);
@@ -47,11 +50,10 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             MyFragment frag;
             if(position == 0){
-                    frag= MyFragment.newInstance(args,true);
+                frag= MyFragment.newInstance(series,seriesFav,false);
             }else{
-                frag= MyFragment.newInstance(args,false);
+                frag= MyFragment.newInstance(series, seriesFav,true);
             }
-
             return frag;
         }
 
@@ -59,21 +61,20 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 2;
         }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String name;
+
+
+        }
     }
 
-    private Bundle getFirstSeries(){
-        ArrayList<Serie> series = new ArrayList<>();
-        ArrayList<Serie> seriesFav = new ArrayList<>();
-
-        Bundle b = new Bundle();
-
+    private void getFirstSeries(){
         series.add(new Serie("The Walking Dead", "Zombies",4, R.drawable.twd,false));
         series.add(new Serie("Narcos", "Drogas",3, R.drawable.n,false));
         series.add(new Serie("House Of Cards", "Politica",5, R.drawable.hoc,false));
-
-        b.putSerializable(SERIES_ARRAY_LIST, series);
-        b.putSerializable(SERIES_ARRAY_LIST_FAV, seriesFav);
-        return b;
     }
 }
 

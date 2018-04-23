@@ -94,8 +94,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         return series.size();
     }
 
-    public void load(ArrayList<Serie> series){
+    public void load(ArrayList<Serie> series,ArrayList<Serie> seriesFav){
         this.series = series;
+        this.seriesFav = seriesFav;
         notifyDataSetChanged();
     }
 
