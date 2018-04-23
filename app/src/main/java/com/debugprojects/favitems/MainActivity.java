@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mtabLayout = findViewById(R.id.tab_layout);
         mPager=  findViewById(R.id.pager);
         mPager.setAdapter(adapter);
+        mtabLayout.setTabsFromPagerAdapter(adapter);
+        mtabLayout.setupWithViewPager(mPager);
     }
 
     class MyPagerAdapter extends FragmentStatePagerAdapter{
@@ -67,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             String name;
 
+            if(position == 0){
+                name = "Series";
+            }else{
+                name = "Favoritos";
+            }
+
+            return name;
 
         }
     }

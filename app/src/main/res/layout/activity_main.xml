@@ -13,6 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        app:tabTextColor="#0e1031"
+        app:tabSelectedTextColor="@color/colorAccent"
         app:tabGravity="fill"
         app:tabMode="fixed"
         />

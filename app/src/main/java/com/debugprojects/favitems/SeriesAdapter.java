@@ -55,6 +55,7 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
         return (new SeriesViewHolder(view));
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, final int position) {
         boolean isFavorited=series.get(position).isFavorited();

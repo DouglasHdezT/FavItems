@@ -52,6 +52,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
     public void onBindViewHolder(@NonNull SeriesFavViewHolder holder, final int position) {
         boolean isFavorited=series.get(position).isFavorited();
 
+        final int pos = position;
         if(isFavorited){
             holder.button_star.setImageResource(R.drawable.star_pressed);
         }
@@ -69,12 +70,8 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
         holder.button_star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(series.get(position).isFavorited()){
-                    series.get(position).setFavorited(false);
-                    series.remove(series.get(position));
-                }else{
-                    series.get(position).setFavorited(true);
-                }
+                series.get(pos).setFavorited(false);
+                series.remove(series.get(pos));
                 notifyDataSetChanged();
             }
         });
