@@ -1,5 +1,14 @@
 package com.debugprojects.favitems;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.app.Fragment;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -16,15 +25,15 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
-public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
+import java.util.ArrayList;
+
+public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.SeriesViewHolder>{
 
     private ArrayList<Serie> series;
-    private ArrayList<Serie> seriesFav;
 
-
-    public SeriesAdapter(ArrayList<Serie> series, ArrayList<Serie> seriesFav){
+    public SeriesAdapterFav(ArrayList<Serie> series){
         this.series = series;
-        this.seriesFav= seriesFav;
+
     }
 
     public static class SeriesViewHolder extends RecyclerView.ViewHolder{
@@ -78,10 +87,9 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
             public void onClick(View v) {
                 if(series.get(position).isFavorited()){
                     series.get(position).setFavorited(false);
-                    seriesFav.remove(series.get(position));
+                    series.remove(series.get(position));
                 }else{
                     series.get(position).setFavorited(true);
-                    seriesFav.add(series.get(position));
                 }
                 notifyDataSetChanged();
             }
@@ -100,3 +108,5 @@ public class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesView
     }
 
 }
+
+

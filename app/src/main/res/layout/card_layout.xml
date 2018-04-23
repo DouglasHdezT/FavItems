@@ -26,6 +26,7 @@
         <TextView
             android:id="@+id/card_title"
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
             android:layout_height="50dp"
             android:textSize="24sp"
             android:gravity="center_vertical"
