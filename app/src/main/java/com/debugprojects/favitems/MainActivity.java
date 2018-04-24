@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity implements MyFragment.OnCrea
         series.add(new Serie("The Walking Dead", "Zombies",4, R.drawable.twd,false));
         series.add(new Serie("Narcos", "Drogas",3, R.drawable.n,false));
         series.add(new Serie("House Of Cards", "Politica",5, R.drawable.hoc,false));
+        series.add(new Serie("Breaking Bad", "Metanfetaminas",5, R.drawable.bb,false));
+        series.add(new Serie("The Bing Bang Teory", "La teoria del todo",4, R.drawable.tbbt,false));
+        series.add(new Serie("Two And A Half Men", "Estupideces Familiares",3, R.drawable.taahm,false));
+        series.add(new Serie("Game Of Thrones", "Skyrim?",4, R.drawable.got,false));
+        series.add(new Serie("The Simpsons", "Politica y vida",5, R.drawable.ts,false));
     }
 }
 
