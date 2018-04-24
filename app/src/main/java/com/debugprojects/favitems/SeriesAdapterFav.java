@@ -75,14 +75,21 @@ public abstract class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapte
             @Override
             public void onClick(View v) {
 
-                //TODO Settear falso a Favorited de las series normales
-                seriesFav.get(pos).setFavorited(false);
+                int pos_mod=0;
+
+                 for(int i =0; i< series.size(); i++){
+                    if(seriesFav.get(pos) ==  series.get(i)){
+                        pos_mod = series. indexOf(series.get(i));
+                    }
+                }
+
+                series.get(pos_mod).setFavorited(false);
                 ((ImageButton) v).setImageResource(R.drawable.star_default);
                 seriesFav.remove(seriesFav.get(pos));
-                Toast.makeText(v.getContext().getApplicationContext(),pos + "",Toast.LENGTH_LONG).show();
+                //Toast.makeText(v.getContext().getApplicationContext(),pos + "",Toast.LENGTH_LONG).show();
                 notifyItemRemoved(pos);
                 notifyItemRangeChanged(pos, seriesFav.size());
-                remover(//TODO POsicion de la serie en las normales);
+                remover(pos_mod);
             }
         });
 
