@@ -9,13 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
-public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.SeriesFavViewHolder>{
+public abstract class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.SeriesFavViewHolder> implements Modificable{
 
+    private ArrayList<Serie> seriesFav;
     private ArrayList<Serie> series;
 
-    public SeriesAdapterFav(ArrayList<Serie> series){
+    public SeriesAdapterFav(ArrayList<Serie> seriesFav, ArrayList<Serie> series){
+        this.seriesFav = seriesFav;
         this.series = series;
 
     }
@@ -50,7 +54,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
 
     @Override
     public void onBindViewHolder(@NonNull SeriesFavViewHolder holder, final int position) {
-        boolean isFavorited=series.get(position).isFavorited();
+        boolean isFavorited= seriesFav.get(position).isFavorited();
 
         final int pos = position;
         if(isFavorited){
@@ -60,20 +64,25 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
             holder.button_star.setImageResource(R.drawable.star_default);
         }
 
-        holder.imageView.setImageResource(series.get(position).getImage_id());
+        holder.imageView.setImageResource(seriesFav.get(position).getImage_id());
 
-        String rate="Rate: "+series.get(position).getRating()+"/5.0";
+        String rate="Rate: "+ seriesFav.get(position).getRating()+"/5.0";
 
-        holder.text_title.setText(series.get(position).getName());
+        holder.text_title.setText(seriesFav.get(position).getName());
         holder.text_rating.setText(rate);
 
         holder.button_star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                series.get(pos).setFavorited(false);
+
+                //TODO Settear falso a Favorited de las series normales
+                seriesFav.get(pos).setFavorited(false);
                 ((ImageButton) v).setImageResource(R.drawable.star_default);
-                series.remove(series.get(pos));
-                notifyDataSetChanged();
+                seriesFav.remove(seriesFav.get(pos));
+                Toast.makeText(v.getContext().getApplicationContext(),pos + "",Toast.LENGTH_LONG).show();
+                notifyItemRemoved(pos);
+                notifyItemRangeChanged(pos, seriesFav.size());
+                remover(//TODO POsicion de la serie en las normales);
             }
         });
 
@@ -81,12 +90,7 @@ public class SeriesAdapterFav extends RecyclerView.Adapter<SeriesAdapterFav.Seri
 
     @Override
     public int getItemCount() {
-        return series.size();
-    }
-
-    public void load(ArrayList<Serie> series){
-        this.series = series;
-        notifyDataSetChanged();
+        return seriesFav.size();
     }
 
 }

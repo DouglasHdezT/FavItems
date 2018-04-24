@@ -32,11 +32,9 @@ public class MyFragment extends Fragment {
 
     public MyFragment() {}
 
-    public static MyFragment newInstance(ArrayList<Serie> series, ArrayList<Serie> seriesFav, boolean isFavorited){
+    public static MyFragment newInstance(boolean isFavorited){
         Bundle bundle = new Bundle();
         MyFragment my =  new MyFragment();
-        bundle.putSerializable(SERIES_ARRAY_LIST , series);
-        bundle.putSerializable(SERIES_ARRAY_LIST_FAV , seriesFav);
         bundle.putBoolean(FAV_KEY, isFavorited);
         my.setArguments(bundle);
         return my;
@@ -60,9 +58,6 @@ public class MyFragment extends Fragment {
         rv.setHasFixedSize(true);
 
         bundle = getArguments();
-
-        series = (ArrayList<Serie>) bundle.getSerializable(SERIES_ARRAY_LIST);
-        seriesFav = (ArrayList<Serie>) bundle.getSerializable(SERIES_ARRAY_LIST_FAV);
 
         adapter.onCreateAdapter(rv, bundle.getBoolean(FAV_KEY));
 

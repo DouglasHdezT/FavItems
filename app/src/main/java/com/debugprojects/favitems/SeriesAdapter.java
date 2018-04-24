@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> {
+public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder> implements Modificable{
 
     private ArrayList<Serie> series;
     private ArrayList<Serie> seriesFav;
@@ -57,6 +57,8 @@ public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.S
     public void onBindViewHolder(@NonNull SeriesViewHolder holder, final int position) {
         boolean isFavorited=series.get(position).isFavorited();
 
+
+
         if(isFavorited){
             holder.button_star.setImageResource(R.drawable.star_pressed);
         }
@@ -91,7 +93,7 @@ public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.S
                     series.get(position).setFavorited(true);
                     seriesFav.add(series.get(position));
                     ((ImageButton)v).setImageResource(R.drawable.star_pressed);
-                    agregar(seriesFav.indexOf(series.get(position)));
+                    agregar(seriesFav.size() - 1);
                 }
                // notifyDataSetChanged();
 
@@ -103,15 +105,6 @@ public abstract class SeriesAdapter extends RecyclerView.Adapter<SeriesAdapter.S
     @Override
     public int getItemCount() {
         return series.size();
-    }
-
-    public abstract void remover(int series);
-    public abstract void agregar(int series);
-
-    public void load(ArrayList<Serie> series,ArrayList<Serie> seriesFav){
-        this.series = series;
-        this.seriesFav = seriesFav;
-        notifyDataSetChanged();
     }
 
 }

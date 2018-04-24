@@ -43,7 +43,17 @@ public class MainActivity extends AppCompatActivity implements MyFragment.OnCrea
         mtabLayout.setTabsFromPagerAdapter(adapter);
         mtabLayout.setupWithViewPager(mPager);
 
-        seriesAdapterFav = new SeriesAdapterFav(seriesFav);
+        seriesAdapterFav = new SeriesAdapterFav(seriesFav,series) {
+            @Override
+            public void remover(int series) {
+                seriesAdapter.notifyItemChanged(series);
+            }
+
+            @Override
+            public void agregar(int series) {
+
+            }
+        };
         seriesAdapter = new SeriesAdapter(series,seriesFav) {
             @Override
             public void remover(int series) {
@@ -78,9 +88,9 @@ public class MainActivity extends AppCompatActivity implements MyFragment.OnCrea
         public Fragment getItem(int position) {
             MyFragment frag;
             if(position == 0){
-                frag= MyFragment.newInstance(series,seriesFav,false);
+                frag= MyFragment.newInstance(false);
             }else{
-                frag= MyFragment.newInstance(series, seriesFav,true);
+                frag= MyFragment.newInstance(true);
             }
             return frag;
         }
